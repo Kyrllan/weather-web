@@ -1,4 +1,19 @@
-<script setup></script>
+<script setup>
+const apiKey = import.meta.env.VITE_API_KEY;
+
+const city = ref("");
+
+const fetchWeather = async () => {
+  const res = await fetch("https://api.openweathermap.org/data/2.5/weather", {
+    params: {
+      q: city.value,
+      appid: apiKey,
+      units: "metric",
+    },
+  });
+  console.log(res);
+};
+</script>
 
 <template>
   <div class="h-screen relative overflow-hidden">
@@ -20,8 +35,11 @@
           class="w-1/2 h-10 p-2"
           type="text"
           placeholder="Search a city..."
+          v-model="city"
         />
-        <button class="bg-sky-400 w-20 text-white h-10">Search</button>
+        <button class="bg-sky-400 w-20 text-white h-10" @click="fetchWeather">
+          Search
+        </button>
       </div>
     </div>
   </div>
